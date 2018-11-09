@@ -1,0 +1,36 @@
+using System;
+
+namespace FibonacciNumbers1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+        start:
+            int n = Convert.ToInt32(Console.ReadLine());
+            if (n <= 45)
+            {
+                int[] a = new int[n + 1];
+                a[0] = 0;
+                if (n == 0)
+                {
+                    Console.WriteLine(a[n]);
+                }
+                else
+                {
+                    a[1] = 1;
+                    for (int i = 2; i <= n; i++)
+                    {
+                        a[i] = a[i - 1] + a[i - 2];
+                    }
+                    Console.WriteLine(a[n]);
+                }
+            }
+            else
+            {
+                goto start;
+            }
+            Console.Read();
+        }
+    }
+}
