@@ -1,0 +1,28 @@
+﻿using System;
+
+namespace UCLN
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string[] m = Console.ReadLine().Split();
+            ulong a = ulong.Parse(m[0]);
+            ulong b = ulong.Parse(m[1]);
+
+            while (a != 0 && b != 0)
+            {
+                if (a > b)
+                {
+                    a %= b;
+                }
+                else
+                {
+                    b %= a;
+                }
+            }
+            Console.WriteLine(a == 0 ? b : a);
+            Console.Read();
+        }
+    }
+}
