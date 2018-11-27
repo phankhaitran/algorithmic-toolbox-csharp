@@ -1,1 +1,32 @@
+using System;
 
+namespace least_common_multiple
+{
+    class Program
+    {
+	      // The idea is that lcd equals to the product of two number divided by their gcd
+        static public ulong greatest_common_divisor(ulong c, ulong d)
+        {
+            while (c != 0 && d != 0)
+            {
+                if (c > d)
+                {
+                    c %= d;
+                }
+                else
+                {
+                    d %= c;
+                }
+            }
+            return c == 0 ? d : c;
+        }
+        static void Main(string[] args)
+        {
+            string[] m = Console.ReadLine().Split();
+            ulong a = ulong.Parse(m[0]);
+            ulong b = ulong.Parse(m[1]);
+            Console.WriteLine((a * b) / greatest_common_divisor(a, b));
+            Console.Read();
+        }
+    }
+}
