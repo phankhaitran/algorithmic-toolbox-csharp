@@ -6,10 +6,13 @@ namespace LastDigit
     {
         static void Main(string[] args)
         {
+            // Input
             ulong n = ulong.Parse(Console.ReadLine());
             ulong[] a = new ulong[n + 1];
             a[0] = 0;
             a[1] = 1;
+            
+            // Compute the last digit of each Fibonacci element and sum them to find the last digit of next element
             for (ulong i = 2; i <= n; i++)
             {
                 ulong c = a[i - 2] / 10;
