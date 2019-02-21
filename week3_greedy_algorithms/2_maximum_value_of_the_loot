@@ -1,1 +1,72 @@
+using System;
 
+namespace MaxLoot
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Nhập dòng đầu tiên
+            string[] m = Console.ReadLine().Split();
+            int items = int.Parse(m[0]);
+            double capacity = int.Parse(m[1]);
+
+            // Nhập các dòng tiếp theo
+            double[] values = new double[items];
+            double[] weights = new double[items];
+            for (int i = 0; i < items; i++)
+            {
+                var answer = Console.ReadLine();
+                values[i] = Convert.ToDouble(answer.Split()[0]);
+                weights[i] = Convert.ToDouble(answer.Split()[1]);
+            }
+
+            // Tính số giá trị mỗi kg của mỗi món
+            double[] ratio = new double[items];
+            for (int i = 0; i < items; i++)
+            {
+                ratio[i] = values[i] / weights[i];
+            }
+
+            // Sắp xếp ratio theo thứ tự từ bé đến lớn
+            for (int i = 1; i < items; i++)
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    if (ratio[i] > ratio[j])
+                    {
+                        double f = weights[j];
+                        double f1 = values[j];
+                        double f2 = ratio[j];
+                        weights[j] = weights[i];
+                        values[j] = values[i];
+                        ratio[j] = ratio[i];
+                        weights[i] = f;
+                        values[i] = f1;
+                        ratio[i] = f2;
+                    }
+                }
+            }
+
+            // Tính toán
+            double s = 0;
+            for (int i = 0; i < items; i++)
+            {
+                double g = capacity - weights[i];
+                if (g > 0)
+                {
+                    s += Math.Round(weights[i] * ratio[i], 3);
+                    capacity -= weights[i];
+                }
+                else if (g <= 0)
+                {
+                    s += Math.Round(capacity * ratio[i], 3);
+                    break;
+                }
+            }
+            Console.WriteLine(s);
+
+            Console.Read();
+        }
+    }
+}
