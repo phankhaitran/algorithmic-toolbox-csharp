@@ -1,26 +1,68 @@
-using System;
+uusing System;
 
-namespace LastDigit
+namespace LastDigitSum
 {
     class Program
     {
         static void Main(string[] args)
         {
-            ulong n = ulong.Parse(Console.ReadLine());
-            ulong[] a = new ulong[n + 1];
-            a[0] = 0;
-            a[1] = 1;
-            for (ulong i = 2; i <= n; i++)
+        start:
+            // Nhập tổng số phần tử để cộng
+            ulong a = ulong.Parse(Console.ReadLine());
+            if (a < ulong.MaxValue)
             {
-                ulong c = a[i - 2] / 10;
-                ulong d = a[i - 1] / 10;
-                a[i - 2] -= c * 10;
-                a[i - 1] -= d * 10;
-                a[i] = a[i - 1] + a[i - 2];
-                ulong e = a[i] / 10;
-                a[i] -= e * 10;
+                // Tìm thương và số dư
+                ulong m = a / 60;
+                ulong n = a % 60;
+
+                // Tính tổng của F0 đến F59
+                ulong[] t = new ulong[(a < 60 ? a : 60) + 1];
+                ulong s = 1;
+                if (a == 0)
+                {
+                    Console.WriteLine(0);
+                }
+                else if (a == 1)
+                {
+                    Console.WriteLine(1);
+                }
+                else
+                {
+                    t[0] = 0;
+                    t[1] = 1;
+                    for (ulong i = 2; i <= (a < 60 ? a : 60); i++)
+                    {
+                        t[i - 2] %= 10;
+                        t[i - 1] %= 10;
+                        t[i] = t[i - 1] + t[i - 2];
+                        t[i] %= 10;
+                        s += t[i];
+                    }
+                    // Tính tổng phần còn dư
+                    ulong y = 0;
+                    if (n > 0 && a > 60)
+                    {
+                        for (ulong i = a - n; i <= a; i++)
+                        {
+                            ulong z = i % 60;
+                            y += t[z];
+                            y %= 10;
+                        }
+                    }
+                    ulong b;
+                    if (m != 0)
+                    {
+                        b = y + m * s;
+                    }
+                    else
+                    {
+                        b = s;
+                    }
+                    ulong c = b % 10;
+                    Console.WriteLine(c);
+                }
+                goto start;
             }
-            Console.Write(a[n]);
             Console.Read();
         }
     }
