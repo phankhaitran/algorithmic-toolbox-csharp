@@ -1,1 +1,63 @@
+using System;
 
+namespace MaxPrizes
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+        start:
+            // Nhập số
+            ulong n = ulong.Parse(Console.ReadLine());
+            ulong n1 = n;
+            if (n <= 1000000000)
+            {
+                //Chia số
+                int s = 0;
+                ulong[] m = new ulong[n1];
+                if (n >= 10)
+                {
+                    for (ulong i = 1; i < n1; i++)
+                    {
+                        if (i * 2 >= n)
+                        {
+                            m[i - 1] = n;
+                            s++;
+                            break;
+                        }
+                        else
+                        {
+                            n -= i;
+                            m[i - 1] = i;
+                            s++;
+                        }
+                    }
+                    Console.Write($"{s}" + "\n");
+                    for (ulong i = 0; i < (ulong)s; i++)
+                    {
+                        Console.Write(m[i]);
+                        Console.Write(' ');
+                    }
+                }
+                else if (n == 1 || n == 2)
+                {
+                    Console.Write($"{1}" + "\n");
+                    Console.Write(n);
+                }
+                else if (n >= 3 && n <= 5)
+                {
+                    Console.WriteLine(2);
+                    Console.Write($"{1}" + ' ' + $"{n - 1}");
+                }
+                else if (n >= 6 && n <= 9)
+                {
+                    Console.WriteLine(3);
+                    Console.Write($"{1}" + ' ' + $"{2}" + ' ' + $"{n - 3}");
+                    Console.Write("\n");
+                }
+                goto start;
+            }
+            Console.Read();
+        }
+    }
+}
