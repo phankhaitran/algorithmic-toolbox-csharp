@@ -1,1 +1,101 @@
+using System;
 
+namespace Signatures
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Nhập số hộ dân
+            int n = int.Parse(Console.ReadLine());
+
+            // Nhập liệu từng hộ dân
+            double[] GioMin = new double[n];
+            double[] GioMax = new double[n];
+            for (int i = 0; i < n; i++)
+            {
+                var answer = Console.ReadLine();
+                GioMin[i] = double.Parse(answer.Split()[0]);
+                GioMax[i] = double.Parse(answer.Split()[1]);
+            }
+
+            // Sắp xếp theo giờ thứ tự từ thấp đến cao
+            for (int i = 1; i < n; i++) // Sắp xếp theo GioMin
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    if (GioMax[i] < GioMax[j])
+                    {
+                        double f = GioMax[i];
+                        GioMax[i] = GioMax[j];
+                        GioMax[j] = f;
+                        double f1 = GioMin[i];
+                        GioMin[i] = GioMin[j];
+                        GioMin[j] = f1;
+                    }
+                }
+            }
+
+            for (int i = 1; i < n; i++) // Sắp xếp GioMax sau khi sắp xếp GioMin
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    if (GioMax[i] == GioMax[j] && GioMin[j] > GioMin[i])
+                    {
+                        double f2 = GioMin[i];
+                        GioMin[i] = GioMin[j];
+                        GioMin[j] = f2;
+                    }
+                }
+            }
+
+            // Xuất số liệu
+
+            int d = -1;
+            int s = 0;
+            double[] m = new double[n];
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 1; j < n; j++)
+                {
+                    if (GioMax[i] >= GioMin[j] && j != (n - 1))
+                    {
+                        continue;
+                    }
+                    else if (GioMax[i] >= GioMin[j] && j == (n - 1))
+                    {
+                        s++;
+                        d++;
+                        m[d] = GioMax[i];
+                        break;
+                    }
+                    else if ((GioMax[i] < GioMin[j]) && j == (n - 1))
+                    {
+                        s++;
+                        d++;
+                        m[d] = GioMax[i];
+                        s++;
+                        d++;
+                        m[d] = GioMax[j];
+                        break;
+                    }
+                    else
+                    {
+                        s++;
+                        d++;
+                        m[d] = GioMax[i];
+                        i = j;
+                    }
+                }
+                break;
+            }
+            Console.Write($"{s}" + "\n");
+            for (int i = 0; i < s; i++)
+            {
+                Console.Write(m[i]);
+                Console.Write(' ');
+            }
+            Console.Read();
+        }
+    }
+}
