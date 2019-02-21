@@ -1,1 +1,156 @@
+using System;
 
+namespace LastDigitSumAgain
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+        start:
+            // Nhập tổng số phần tử để cộng
+            string[] ma = Console.ReadLine().Split();
+            ulong m = ulong.Parse(ma[0]);
+            ulong n = ulong.Parse(ma[1]);
+            ulong m1 = m - 1;
+            if (m <= n)
+            {
+                // Tìm thương và số dư
+                ulong thuong1 = m1 / 60;
+                ulong du1 = m1 % 60;
+                ulong thuong2 = n / 60;
+                ulong du2 = n % 60;
+
+                if (m == 0 && n == 0)
+                {
+                    Console.WriteLine(0);
+                }
+                else if (m == 0 && n == 1)
+                {
+                    Console.WriteLine(1);
+                }
+                else if ((m == 0 && n != 1) || (m == 1 && n != 1))
+                {
+
+                    // Tính tổng của F0 đến F59
+                    ulong[] t = new ulong[(n < 60 ? n : 60) + 1];
+                    ulong s = 1;
+                    t[0] = 0;
+                    t[1] = 1;
+                    for (ulong i = 2; i <= (n < 60 ? n : 60); i++)
+                    {
+                        t[i - 2] %= 10;
+                        t[i - 1] %= 10;
+                        t[i] = t[i - 1] + t[i - 2];
+                        t[i] %= 10;
+                        s += t[i];
+                    }
+                    // Tính tổng phần còn dư
+                    ulong y = 0;
+                    if (du2 > 0 && n > 60)
+                    {
+                        for (ulong i = n - du2; i <= n; i++)
+                        {
+                            ulong z = i % 60;
+                            y += t[z];
+                            y %= 10;
+                        }
+                    }
+                    ulong b;
+                    if (thuong2 != 0)
+                    {
+                        b = y + thuong2 * s;
+                    }
+                    else
+                    {
+                        b = s;
+                    }
+                    ulong c = b % 10;
+                    Console.WriteLine(c);
+                }
+                else if (m == 1 && n == 1)
+                {
+                    Console.WriteLine(1);
+                }
+                else
+                {
+                    #region Tính số cuối của dãy m
+                    // Tính tổng của F0 đến F59
+                    ulong[] t1 = new ulong[(m1 < 60 ? m1 : 60) + 1];
+                    ulong s1 = 1;
+                    t1[0] = 0;
+                    t1[1] = 1;
+                    for (ulong i = 2; i <= (m1 < 60 ? m1 : 60); i++)
+                    {
+                        t1[i - 2] %= 10;
+                        t1[i - 1] %= 10;
+                        t1[i] = t1[i - 1] + t1[i - 2];
+                        t1[i] %= 10;
+                        s1 += t1[i];
+                    }
+                    // Tính tổng phần còn dư
+                    ulong y1 = 0;
+                    if (du1 > 0 && m1 > 60)
+                    {
+                        for (ulong i = m1 - du1; i <= m1; i++)
+                        {
+                            ulong z1 = i % 60;
+                            y1 += t1[z1];
+                        }
+                    }
+                    ulong b1;
+                    if (thuong1 != 0)
+                    {
+                        b1 = y1 + thuong1 * s1;
+                    }
+                    else
+                    {
+                        b1 = s1;
+                    }
+                    #endregion
+
+
+                    #region Tính số cuối của dãy n
+                    ulong[] t2 = new ulong[(n < 60 ? n : 60) + 1];
+                    ulong s2 = 1;
+                    t2[0] = 0;
+                    t2[1] = 1;
+                    for (ulong i = 2; i <= (n < 60 ? n : 60); i++)
+                    {
+                        t2[i - 2] %= 10;
+                        t2[i - 1] %= 10;
+                        t2[i] = t2[i - 1] + t2[i - 2];
+                        t2[i] %= 10;
+                        s2 += t2[i];
+                    }
+                    // Tính tổng phần còn dư
+                    ulong y2 = 0;
+                    if (du2 > 0 && n > 60)
+                    {
+                        for (ulong i = n - du2; i <= n; i++)
+                        {
+                            ulong z2 = i % 60;
+                            y2 += t2[z2];
+                        }
+                    }
+                    ulong b2;
+                    if (thuong2 != 0)
+                    {
+                        b2 = y2 + thuong2 * s2;
+                    }
+                    else
+                    {
+                        b2 = s2;
+                    }
+                    #endregion
+                    ulong c = (b2 - b1) % 10;
+                    Console.WriteLine(c);
+                }
+                Console.Read();
+            }
+            else
+            {
+                goto start;
+            }
+        }
+    }
+}
