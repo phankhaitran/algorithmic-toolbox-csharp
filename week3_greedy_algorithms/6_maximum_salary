@@ -1,1 +1,61 @@
+using System;
+using System.Collections.Generic;
 
+namespace MaxSalary
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Nhập số tiền trên từng mảnh giấy
+            int n = int.Parse(Console.ReadLine());
+            string[] salary1 = new string[n];
+            for (int i = 0; i < 1; i++)
+            {
+                var answer = Console.ReadLine();
+                for (int j = 0; j < n; j++)
+                {
+                    salary1[j] = answer.Split()[j];
+                }
+            }
+
+            // Sắp xếp
+            List<string> salary = new List<string>(salary1);
+            string s = "";
+            int a1 = salary1.Length;
+            SafeMax a = new SafeMax();
+            //string sMax = "";
+            while (a1 > 0)
+            {
+                string max_ = salary[0];
+                for (int i = 0; i < a1; i++)
+                {
+                    max_ = a.Sort1(max_, salary[i]);
+                }
+                s += max_;
+                for (int i = 0; i < a1; i++)
+                {
+                    if (max_ == salary[i])
+                    {
+                        salary.RemoveAt(i);
+                        break;
+                    }
+                }
+                a1--;
+            }
+            Console.WriteLine(s);
+            Console.Read();
+        }
+    }
+    public class SafeMax
+    {
+        public string Sort1(string a, string b)
+        {
+            string c = a + b;
+            string d = b + a;
+            ulong c1 = ulong.Parse(c);
+            ulong d1 = ulong.Parse(d);
+            return c1 > d1 ? a : b;
+        }
+    }
+}
