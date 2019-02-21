@@ -1,1 +1,57 @@
+using System;
 
+namespace BinarySearch
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Nhập input
+            var answer = Console.ReadLine();
+            var answer1 = Console.ReadLine();
+            string[] a1 = answer.Split(' ');
+            string[] a2 = answer1.Split(' ');
+
+            ulong[] a11 = Array.ConvertAll(a1, ulong.Parse);
+            ulong[] a12 = Array.ConvertAll(a2, ulong.Parse);
+            ulong[] a = new ulong[a11.Length - 1];
+            ulong[] b = new ulong[a12.Length - 1];
+            Array.Copy(a11, 1, a, 0, a.Length);
+            Array.Copy(a12, 1, b, 0, b.Length);
+            // Binary Search
+
+            for (int i = 0; i < b.Length; i++)
+            {
+                binarySearch(b[i], a, 0, (int)a11[0] - 1);
+            }
+            Console.Read();
+        }
+
+        public static void binarySearch(ulong x, ulong[] a, int low, int high)
+        {
+            while (high >= low)
+            {
+                int mid = low + ((high - low) / 2);
+                if (x == a[mid])
+                {
+                    Console.Write($"{mid}" + " ");
+                    break;
+                }
+                else if (x < a[mid])
+                {
+                    high = mid - 1;
+                    continue;
+                }
+                else
+                {
+                    low = mid + 1;
+                    continue;
+                }
+            }
+            if (high < low)
+            {
+                Console.Write("-1" + " ");
+            }
+        }
+    }
+}
