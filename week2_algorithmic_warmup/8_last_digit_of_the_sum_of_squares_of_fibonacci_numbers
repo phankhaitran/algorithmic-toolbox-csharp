@@ -1,1 +1,45 @@
+using System;
 
+namespace LastDigitSumSquares
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            start:
+            ulong n = ulong.Parse(Console.ReadLine());
+            if (n <= ulong.MaxValue)
+            {
+                if (n == 0)
+                {
+                    Console.WriteLine(0);
+                }
+                else if (n == 1)
+                {
+                    Console.WriteLine(1);
+                }
+                else
+                {
+                    ulong[] m = new ulong[60];
+                    m[0] = 0;
+                    m[1] = 1;
+                    for (int i = 2; i < 60; i++)
+                    {
+                        m[i - 1] %= 10;
+                        m[i - 2] %= 10;
+                        m[i] = m[i - 1] + m[i - 2];
+                        m[i] %= 10;
+                    }
+
+                    ulong c = n % 60;
+                    ulong d = (n + 1) % 60;
+
+                    ulong e = (m[c] * m[d]) % 10;
+                    Console.WriteLine(e);
+                    goto start;
+                }
+            }
+            Console.Read();
+        }
+    }
+}
