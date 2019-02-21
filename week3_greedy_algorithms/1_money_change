@@ -1,1 +1,20 @@
+using System;
 
+namespace MoneyChange
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Nhập số tiền từ màn hình
+            int a = int.Parse(Console.ReadLine());
+            int m1 = a / 10;
+            int m2 = a % 10;
+            int m3 = m2 / 5;
+            int m4 = m2 % 5;
+            int s = m1 + m3 + m4;
+            Console.WriteLine(s);
+            Console.Read();
+        }
+    }
+}
