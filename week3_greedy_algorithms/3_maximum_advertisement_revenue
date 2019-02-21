@@ -1,1 +1,61 @@
+using System;
 
+namespace MaxAdRevenue
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            // Nhập số lượng quảng cáo và số lượng click
+            int n = int.Parse(Console.ReadLine());
+            double[] ads = new double[n];
+            double[] click = new double[n];
+            for (int i = 0; i < 1; i++)
+            {
+                var answer = Console.ReadLine();
+                var answer1 = Console.ReadLine();
+                for (int j = 0; j < n; j++)
+                {
+                    ads[j] = int.Parse(answer.Split()[j]);
+                    click[j] = int.Parse(answer1.Split()[j]);
+                }
+            }
+
+            // Sắp xếp theo thứ tự giảm dần
+            for (int i = 1; i < n; i++) // Sắp xếp cho ads
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    if (ads[i] > ads[j])
+                    {
+                        double f = ads[i];
+                        ads[i] = ads[j];
+                        ads[j] = f;
+                    }
+                }
+            }
+            for (int i = 1; i < n; i++) // Sắp xếp cho click
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    if (click[i] > click[j])
+                    {
+                        double f1 = click[i];
+                        click[i] = click[j];
+                        click[j] = f1;
+                    }
+                }
+            }
+
+            double s = 0;
+            for (int i = 0; i < n; i++)
+            {
+                s += ads[i] * click[i];
+            }
+
+            // Xuất tổng
+            Console.WriteLine(s);
+            Console.Read();
+        }
+    }
+}
